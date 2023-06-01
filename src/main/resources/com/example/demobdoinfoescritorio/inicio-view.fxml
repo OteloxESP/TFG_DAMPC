@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demobdoinfoescritorio.InicioController">
+    <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
+        <items>
+            <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" text="Inicio" />
+            <Button fx:id="usuariosButton" mnemonicParsing="false" onAction="#mostrarUsuarios" text="Usuarios" />
+            <Button fx:id="configuracionButton" mnemonicParsing="false" onAction="#mostrarConfiguracion" text="Configuración" />
+        </items>
+    </ToolBar>
+   <Pane fx:id="inicioPane" prefHeight="500.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
+      <children>
+         <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0" text="Hola 1" />
+      </children>
+      <StackPane.margin>
+         <Insets top="40.0" />
+      </StackPane.margin>
+   </Pane>
+    <Pane fx:id="usuariosPane" prefHeight="540.0" prefWidth="620.0" StackPane.alignment="CENTER">
+        <StackPane.margin>
+            <Insets top="40.0" />
+        </StackPane.margin>
+      <children>
+         <TableView fx:id="usuariosTable" prefHeight="500.0" prefWidth="620.0">
+           <columns>
+             <TableColumn prefWidth="75.0" text="_id" />
+             <TableColumn prefWidth="75.0" text="Usuario" />
+               <TableColumn prefWidth="75.0" text="Email" />
+               <TableColumn prefWidth="75.0" text="Contraseña" />
+           </columns>
+            <padding>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+         </TableView>
+      </children>
+    </Pane>
+    <Pane fx:id="configuracionPane" prefHeight="540.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
+        <children>
+            <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0" text="Hola 3" />
+        </children>
+        <StackPane.margin>
+            <Insets top="40.0" />
+        </StackPane.margin>
+    </Pane>
+    
+</StackPane>
