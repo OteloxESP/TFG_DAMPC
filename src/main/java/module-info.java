@@ -14,6 +14,6 @@ module com.example.demobdoinfoescritorio {
     requires org.mongodb.bson;
     requires jbcrypt;
 
-    opens com.example.demobdoinfoescritorio to javafx.fxml;
-    exports com.example.demobdoinfoescritorio;
+    opens com.example.bdoInfoDesktop to javafx.fxml;
+    exports com.example.bdoInfoDesktop;
 }

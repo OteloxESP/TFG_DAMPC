@@ -1,6 +1,6 @@
-package com.example.demobdoinfoescritorio;
+package com.example.bdoInfoDesktop;
 
-import com.example.demobdoinfoescritorio.db.UsuariosDB;
+import com.example.bdoInfoDesktop.db.UsuariosDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

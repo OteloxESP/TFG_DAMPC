@@ -1,4 +1,4 @@
-package com.example.demobdoinfoescritorio;
+package com.example.bdoInfoDesktop;
 
 import com.mongodb.*;
 import com.mongodb.client.MongoClient;
@@ -6,9 +6,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;

@@ -1,4 +1,4 @@
-package com.example.demobdoinfoescritorio;
+package com.example.bdoInfoDesktop;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
