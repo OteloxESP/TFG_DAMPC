@@ -12,16 +12,19 @@ import java.io.IOException;
 
 public class InicioApplication extends Application {
     private TableView<UsuariosDB> usuariosTable;
+    private InicioController inicioController;
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("inicio-view.fxml"));
-        Scene scene = new Scene(root, 620, 540);
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("inicio-view.fxml"));
+        Parent root = loader.load();
+        inicioController = loader.getController();
+        Scene scene = new Scene(root, 820, 640);
         stage.setTitle("Inicio");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+        inicioController.mostrarInicio();
     }
 
     public static void main(String[] args) {

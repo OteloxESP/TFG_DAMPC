@@ -1,50 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bdoInfoDesktop.InicioController">
-    <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
+<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/20.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bdoInfoDesktop.InicioController">
+    <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0"
+             style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
         <items>
-            <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" text="Inicio" />
-            <Button fx:id="usuariosButton" mnemonicParsing="false" onAction="#mostrarUsuarios" text="Usuarios" />
-            <Button fx:id="configuracionButton" mnemonicParsing="false" onAction="#mostrarConfiguracion" text="Configuración" />
+            <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" text="Inicio"/>
+            <Button fx:id="usuariosButton" mnemonicParsing="false" onAction="#mostrarUsuarios" text="Usuarios"/>
+            <Button fx:id="configuracionButton" mnemonicParsing="false" onAction="#mostrarConfiguracion"
+                    text="Configuración"/>
         </items>
     </ToolBar>
-   <Pane fx:id="inicioPane" prefHeight="500.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
-      <children>
-         <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0" text="Hola 1" />
-      </children>
-      <StackPane.margin>
-         <Insets top="40.0" />
-      </StackPane.margin>
-   </Pane>
-    <Pane fx:id="usuariosPane" prefHeight="540.0" prefWidth="620.0" StackPane.alignment="CENTER">
-        <StackPane.margin>
-            <Insets top="40.0" />
-        </StackPane.margin>
-      <children>
-         <TableView fx:id="usuariosTable" prefHeight="500.0" prefWidth="620.0">
-           <columns>
-             <TableColumn prefWidth="75.0" text="_id" />
-             <TableColumn prefWidth="75.0" text="Usuario" />
-               <TableColumn prefWidth="75.0" text="Email" />
-               <TableColumn prefWidth="75.0" text="Contraseña" />
-           </columns>
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-         </TableView>
-      </children>
-    </Pane>
-    <Pane fx:id="configuracionPane" prefHeight="540.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
+    <Pane fx:id="inicioPane" prefHeight="500.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
         <children>
-            <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0" text="Hola 3" />
+            <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0"
+                   text="Hola 1"/>
         </children>
         <StackPane.margin>
-            <Insets top="40.0" />
+            <Insets top="40.0"/>
         </StackPane.margin>
     </Pane>
-    
+    <StackPane fx:id="usuariosPane" prefHeight="540.0" prefWidth="620.0" StackPane.alignment="CENTER">
+        <StackPane.margin>
+            <Insets top="40.0"/>
+        </StackPane.margin>
+        <children>
+            <ProgressBar fx:id="progressBar" prefHeight="20" prefWidth="200.0" progress="0.0" visible="false"/>
+            <TableView fx:id="usuariosTable" prefHeight="500.0" prefWidth="620.0" visible="false">
+                <columns>
+                    <TableColumn fx:id="usuarioColumna" prefWidth="110.0" text="Usuario"/>
+                    <TableColumn fx:id="emailColumna" prefWidth="165.0" text="Email"/>
+                    <TableColumn fx:id="contraseñaColumna" prefWidth="105.0" text="Contraseña"/>
+                    <TableColumn fx:id="maestriaCarneColumna" prefWidth="60.0" text="Carne"/>
+                    <TableColumn fx:id="maestriaHierbasColumna" prefWidth="60.0" text="Hierbas"/>
+                    <TableColumn fx:id="maestriaSangreColumna" prefWidth="60.0" text="Sangre"/>
+                    <TableColumn fx:id="maestriaTalaColumna" prefWidth="60.0" text="Tala"/>
+                </columns>
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </padding>
+            </TableView>
+        </children>
+    </StackPane>
+    <Pane fx:id="configuracionPane" prefHeight="540.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
+        <children>
+            <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0"
+                   text="Hola 3"/>
+        </children>
+        <StackPane.margin>
+            <Insets top="40.0"/>
+        </StackPane.margin>
+    </Pane>
+
 </StackPane>
