@@ -1,4 +1,4 @@
-package com.example.bdoInfoDesktop;
+package com.example.tfg_dampc;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

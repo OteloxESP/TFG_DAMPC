@@ -1,6 +1,6 @@
-package com.example.bdoInfoDesktop;
+package com.example.tfg_dampc;
 
-import com.example.bdoInfoDesktop.db.UsuariosDB;
+import com.example.tfg_dampc.db.UsuariosDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

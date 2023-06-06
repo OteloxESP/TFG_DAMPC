@@ -1,4 +1,4 @@
-module com.example.demobdoinfoescritorio {
+module com.example.tfg_dampc {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -14,7 +14,7 @@ module com.example.demobdoinfoescritorio {
     requires org.mongodb.bson;
     requires jbcrypt;
 
-    opens com.example.bdoInfoDesktop to javafx.fxml;
-    opens com.example.bdoInfoDesktop.db to javafx.base;
-    exports com.example.bdoInfoDesktop;
+    opens com.example.tfg_dampc to javafx.fxml;
+    opens com.example.tfg_dampc.db to javafx.base;
+    exports com.example.tfg_dampc;
 }

@@ -1,7 +1,7 @@
-package com.example.bdoInfoDesktop;
+package com.example.tfg_dampc;
 
-import com.example.bdoInfoDesktop.db.UsuariosDB;
-import com.example.bdoInfoDesktop.db.ZonasDB;
+import com.example.tfg_dampc.db.UsuariosDB;
+import com.example.tfg_dampc.db.ZonasDB;
 import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -63,8 +63,6 @@ public class InicioController {
     private TableColumn<ZonasDB, Integer> item3Columna;
     @FXML
     private TableColumn<ZonasDB, Integer> item4Columna;
-    @FXML
-    private TableColumn<ZonasDB, Integer> item5Columna;
 
     private void initialize() {
 
@@ -104,7 +102,6 @@ public class InicioController {
             item2Columna.setCellValueFactory(new PropertyValueFactory<>("item2"));
             item3Columna.setCellValueFactory(new PropertyValueFactory<>("item3"));
             item4Columna.setCellValueFactory(new PropertyValueFactory<>("item4"));
-            item5Columna.setCellValueFactory(new PropertyValueFactory<>("item5"));
             zonasTable.setItems(zonasObservableList);
             progressBar.setVisible(false);
             zonasTable.setVisible(true);
@@ -229,7 +226,6 @@ public class InicioController {
                     zona.setItem2(document.getInteger("item2"));
                     zona.setItem3(document.getInteger("item3"));
                     zona.setItem4(document.getInteger("item4"));
-                    zona.setItem5(document.getInteger("item5"));
                     zonasList.add(zona);
                 }
             } catch (MongoException e) {

@@ -1,4 +1,4 @@
-package com.example.bdoInfoDesktop.db;
+package com.example.tfg_dampc.db;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,7 +12,6 @@ public class ZonasDB {
     private SimpleIntegerProperty item2;
     private SimpleIntegerProperty item3;
     private SimpleIntegerProperty item4;
-    private SimpleIntegerProperty item5;
 
     public ZonasDB(){
 
@@ -72,13 +71,5 @@ public class ZonasDB {
 
     public void setItem4(int item4) {
         this.item4 = new SimpleIntegerProperty(item4);
-    }
-
-    public int getItem5() {
-        return item5.get();
-    }
-
-    public void setItem5(int item5) {
-        this.item5 = new SimpleIntegerProperty(item5);
     }
 }

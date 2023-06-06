@@ -1,4 +1,5 @@
-package com.example.bdoInfoDesktop.db;
+package com.example.tfg_dampc.db;
+
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
