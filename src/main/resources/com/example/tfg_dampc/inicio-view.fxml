@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tfg_dampc.InicioController">
+<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.InicioController">
     <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
         <items>
             <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" text="Inicio" />

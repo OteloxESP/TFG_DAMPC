@@ -5,19 +5,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="10.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.tfg_dampc.LoginController">
+<VBox alignment="CENTER" style="-fx-background-color: #C6C3C3" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.LoginController">
     <padding>
-        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@logo.png" />
+      </image>
+   </ImageView>
 
-    <Label text="Inicio de sesión" style="-fx-font-size: 18px;"/>
+    <Label style="-fx-font-size: 18px;" text="Iniciar sesión" />
 
-    <TextField fx:id="usernameField" promptText="Nombre de usuario"/>
-    <PasswordField fx:id="passwordField" promptText="Contraseña"/>
+    <TextField fx:id="usernameField" promptText="Nombre de usuario">
+      <VBox.margin>
+         <Insets left="60.0" right="60.0" />
+      </VBox.margin></TextField>
+    <PasswordField fx:id="passwordField" promptText="Contraseña">
+      <VBox.margin>
+         <Insets left="60.0" right="60.0" />
+      </VBox.margin></PasswordField>
 
-    <Button fx:id="loginButton" text="Iniciar sesión" onAction="#loginButtonClicked"/>
+    <Button fx:id="loginButton" onAction="#loginButtonClicked" text="Iniciar sesión" />
 </VBox>
-
