@@ -13,7 +13,7 @@ public class LoginApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
-        Scene scene = new Scene(root, 400, 340);
+        Scene scene = new Scene(root, 400, 370);
 
         stage.setTitle("Inicio de sesión");
         stage.getIcons().add(new Image(LoginApplication.class.getResourceAsStream("logo.png")));

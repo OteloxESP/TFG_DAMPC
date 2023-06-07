@@ -7,6 +7,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.controlsfx.dialog.ProgressDialog;
@@ -31,6 +33,10 @@ public class LoginController {
     @FXML
     private void initialize() {
         // Inicializar controlador
+
+        // Asignar los tooltips a los campos
+        usernameField.setTooltip(new Tooltip("Introduce tu nombre de usuario"));
+        passwordField.setTooltip(new Tooltip("Introduce tu contraseña"));
     }
 
     @FXML
@@ -70,19 +76,24 @@ public class LoginController {
 
                         // Comprobar si la contrasena coincide
                         if (BCrypt.checkpw(contrasena, contrasenaDB)) {
-                            System.out.println("Inicio de sesión exitoso");
-                            try {
-                                // Crear la nueva ventana y ocultar la actual
-                                Stage stage = new Stage();
-                                InicioApplication inicio = new InicioApplication();
-                                inicio.start(stage);
-                                loginButton.getScene().getWindow().hide();
+                            if (user.getInteger("administrador") == 1){
+                                try {
+                                    System.out.println("Inicio de sesión exitoso");
+                                    // Crear la nueva ventana y ocultar la actual
+                                    Stage stage = new Stage();
+                                    InicioApplication inicio = new InicioApplication();
+                                    inicio.start(stage);
+                                    loginButton.getScene().getWindow().hide();
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                ocultarErrorLabel(); //Ocultar label al usuario y quitar estilos a los campos
-                                mostrarErrorAlerta("Error de servidor"); //Mostrar alerta al usuario
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    mostrarErrorAlerta("Algo ha salido mal, vuelve a iniciar sesión"); //Mostrar alerta al usuario
+                                }
+
+                            }else{
+                                mostrarErrorAlerta("No tienes permisos de administrador"); //Mostrar alerta al usuario
                             }
+                            ocultarErrorLabel(); // Ocultar label al usuario y quitar estilos a los campos
 
                         } else {
                             System.out.println("Credenciales incorrectas 2");
@@ -99,6 +110,14 @@ public class LoginController {
                 ocultarErrorLabel(); //Ocultar label al usuario y quitar estilos a los campos
                 mostrarErrorAlerta("Error de servidor"); //Mostrar alerta al usuario
             }
+        }
+    }
+
+    @FXML
+    private void teclaPulsada(KeyEvent event){
+        // Si la tecla es el Enter
+        if (event.getCode() == KeyCode.ENTER) {
+            loginButtonClicked();
         }
     }
 
@@ -124,7 +143,7 @@ public class LoginController {
 
     public void mostrarErrorAlerta(String titulo){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error de servidor");
+        alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(titulo);
         alert.show();
