@@ -13,22 +13,26 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@logo.png" />
-      </image>
-   </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@logo.png" />
+        </image>
+    </ImageView>
 
     <Label style="-fx-font-size: 18px;" text="Iniciar sesión" />
 
+    <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-size: 14px;" visible="false" managed="false" />
+
     <TextField fx:id="usernameField" promptText="Nombre de usuario">
-      <VBox.margin>
-         <Insets left="60.0" right="60.0" />
-      </VBox.margin></TextField>
+        <VBox.margin>
+            <Insets left="60.0" right="60.0" />
+        </VBox.margin>
+    </TextField>
     <PasswordField fx:id="passwordField" promptText="Contraseña">
-      <VBox.margin>
-         <Insets left="60.0" right="60.0" />
-      </VBox.margin></PasswordField>
+        <VBox.margin>
+            <Insets left="60.0" right="60.0" />
+        </VBox.margin>
+    </PasswordField>
 
     <Button fx:id="loginButton" onAction="#loginButtonClicked" text="Iniciar sesión" />
 </VBox>
