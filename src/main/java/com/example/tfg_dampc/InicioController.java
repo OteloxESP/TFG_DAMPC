@@ -11,14 +11,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import org.bson.Document;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,12 @@ public class InicioController {
     private TableColumn<ZonasDB, Integer> item3Columna;
     @FXML
     private TableColumn<ZonasDB, Integer> item4Columna;
+    @FXML
+    Button inicioButton;
+    @FXML
+    Button usuariosButton;
+    @FXML
+    Button salirButton;
 
     private void initialize() {
 
@@ -72,7 +81,7 @@ public class InicioController {
     public void mostrarInicio() {
         inicioPane.setVisible(true);
         usuariosPane.setVisible(false);
-        configuracionPane.setVisible(false);
+        //configuracionPane.setVisible(false);
         zonasTable.setVisible(false);
         progressBar.setVisible(true);
 
@@ -118,7 +127,7 @@ public class InicioController {
     public void mostrarUsuarios() {
         inicioPane.setVisible(false);
         usuariosPane.setVisible(true);
-        configuracionPane.setVisible(false);
+        //configuracionPane.setVisible(false);
         usuariosTable.setVisible(false);
         progressBar.setVisible(true);
 
@@ -161,13 +170,25 @@ public class InicioController {
         obtenerUsuariosThread.start();
     }
 
-
     @FXML
+    public void cerrarSesion(){
+        try{
+            Stage stage = new Stage();
+            LoginApplication login = new LoginApplication();
+            login.start(stage);
+            salirButton.getScene().getWindow().hide();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+    /*@FXML
     public void mostrarConfiguracion() {
         inicioPane.setVisible(false);
         usuariosPane.setVisible(false);
         configuracionPane.setVisible(true);
-    }
+    }*/
 
     public static List<UsuariosDB> obtenerUsuariosDB() {
         ServerApi serverApi = ServerApi.builder()

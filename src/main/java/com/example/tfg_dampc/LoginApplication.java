@@ -16,7 +16,7 @@ public class LoginApplication extends Application {
         Scene scene = new Scene(root, 400, 370);
 
         stage.setTitle("Inicio de sesión");
-        stage.getIcons().add(new Image(LoginApplication.class.getResourceAsStream("logo.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

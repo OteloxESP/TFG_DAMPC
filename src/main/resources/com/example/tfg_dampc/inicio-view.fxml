@@ -2,20 +2,18 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.InicioController">
+<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tfg_dampc.InicioController">
     <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
         <items>
-            <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" text="Inicio" />
-            <Button fx:id="usuariosButton" mnemonicParsing="false" onAction="#mostrarUsuarios" text="Usuarios" />
-            <Button fx:id="configuracionButton" mnemonicParsing="false" onAction="#mostrarConfiguracion" text="Configuración" />
+            <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" prefWidth="110.0" text="Inicio" />
+            <Button fx:id="usuariosButton" mnemonicParsing="false" onAction="#mostrarUsuarios" prefWidth="110.0" text="Usuarios" />
+            <Button fx:id="salirButton" mnemonicParsing="false" onAction="#cerrarSesion" prefWidth="110.0" text="Salir" />
         </items>
     </ToolBar>
     <ProgressBar fx:id="progressBar" prefHeight="20" prefWidth="200.0" progress="0.0" visible="false" StackPane.alignment="CENTER" />
@@ -57,13 +55,13 @@
             </TableView>
         </children>
     </StackPane>
-    <Pane fx:id="configuracionPane" prefHeight="540.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
+    <!--<Pane fx:id="configuracionPane" prefHeight="540.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
         <children>
             <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0" text="Hola 3" />
         </children>
         <StackPane.margin>
             <Insets top="40.0" />
         </StackPane.margin>
-    </Pane>
+    </Pane>-->
 
 </StackPane>
