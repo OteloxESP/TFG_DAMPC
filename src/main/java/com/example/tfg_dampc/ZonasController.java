@@ -20,8 +20,6 @@ import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.io.IOException;
-
 public class ZonasController {
     public Button aceptarButton;
     public Button cancelarButton;
@@ -100,14 +98,15 @@ public class ZonasController {
             Bson update = new Document("$set", cambios);
 
             UpdateResult result = collection.updateOne(filter, update); // Realizar la update en la db.
-            if (result.getModifiedCount() > 0) {
-                v = true;
-            }
+            v = true;
 
         } catch (MongoException e) {
             e.printStackTrace();
+            v = false;
+
         } catch (Exception e){
             e.printStackTrace();
+            v = false;
         }
 
         return v;
@@ -177,15 +176,27 @@ public class ZonasController {
         // Comprobar si los campos numéricos tienen otra cosa que no sean dígitos
         if (!item1TextField.getText().matches("\\d*")){
             v = true;
+            item1TextField.setStyle("-fx-border-color: red;");
+        }else{
+            item1TextField.setStyle(null);
         }
         if (!item2TextField.getText().matches("\\d*")){
             v = true;
+            item2TextField.setStyle("-fx-border-color: red;");
+        }else{
+            item2TextField.setStyle(null);
         }
         if (!item3TextField.getText().matches("\\d*")){
             v = true;
+            item3TextField.setStyle("-fx-border-color: red;");
+        }else{
+            item3TextField.setStyle(null);
         }
         if (!item4TextField.getText().matches("\\d*")){
             v = true;
+            item4TextField.setStyle("-fx-border-color: red;");
+        }else{
+            item4TextField.setStyle(null);
         }
 
         return v;

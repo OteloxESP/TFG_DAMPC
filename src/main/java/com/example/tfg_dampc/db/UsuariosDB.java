@@ -14,6 +14,7 @@ public class UsuariosDB {
     private SimpleIntegerProperty maestriaHierbas;
     private SimpleIntegerProperty maestriaSangre;
     private SimpleIntegerProperty maestriaTala;
+    private SimpleIntegerProperty administrador;
 
     public UsuariosDB(){
 
@@ -83,4 +84,11 @@ public class UsuariosDB {
         this.maestriaTala = new SimpleIntegerProperty(maestriaTala);
     }
 
+    public int getAdministrador() {
+        return administrador.get();
+    }
+
+    public void setAdministrador(int administrador) {
+        this.administrador = new SimpleIntegerProperty(administrador);
+    }
 }

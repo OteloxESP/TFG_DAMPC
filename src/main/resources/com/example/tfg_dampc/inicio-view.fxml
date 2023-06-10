@@ -42,14 +42,14 @@
                   <Insets />
               </StackPane.margin>
           </ToolBar>
-          <TableView fx:id="zonasTable" onMouseClicked="#activarEditarBorrar" prefHeight="500.0" prefWidth="620.0" visible="false">
+          <TableView fx:id="zonasTable" onMouseClicked="#activarEditarBorrarZona" prefHeight="500.0" prefWidth="620.0" visible="false">
            <columns>
-               <TableColumn fx:id="nombreZonaColumna" editable="false" prefWidth="270.0" text="Zona" />
-               <TableColumn fx:id="tipoZonaColumna" editable="false" prefWidth="130.0" text="Tipo de zona" />
-               <TableColumn fx:id="item1Columna" editable="false" prefWidth="105.0" text="Item 1" />
-               <TableColumn fx:id="item2Columna" editable="false" prefWidth="105.0" text="Item 2" />
-               <TableColumn fx:id="item3Columna" editable="false" prefWidth="105.0" text="Item 3" />
-               <TableColumn fx:id="item4Columna" editable="false" prefWidth="105.0" text="Item 4" />
+               <TableColumn fx:id="nombreZonaColumna" editable="false" prefWidth="270.0" resizable="false" text="Zona" />
+               <TableColumn fx:id="tipoZonaColumna" editable="false" prefWidth="118.0" resizable="false" text="Tipo de zona" />
+               <TableColumn fx:id="item1Columna" editable="false" prefWidth="105.0" resizable="false" text="Item 1" />
+               <TableColumn fx:id="item2Columna" editable="false" prefWidth="105.0" resizable="false" text="Item 2" />
+               <TableColumn fx:id="item3Columna" editable="false" prefWidth="105.0" resizable="false" text="Item 3" />
+               <TableColumn fx:id="item4Columna" editable="false" prefWidth="105.0" resizable="false" text="Item 4" />
            </columns>
             <StackPane.margin>
                <Insets bottom="5.0" left="5.0" right="5.0" top="45.0" />
@@ -62,19 +62,39 @@
             <Insets top="40.0" />
         </StackPane.margin>
         <children>
-            <TableView fx:id="usuariosTable" prefHeight="500.0" prefWidth="620.0" visible="false">
+            <ToolBar prefHeight="40.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
+                <items>
+                    <Button fx:id="añadirUsuarioButton" mnemonicParsing="false" onAction="#añadirUsuario" text="Añadir">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font></Button>
+                    <Button fx:id="editarUsuarioButton" mnemonicParsing="false" onAction="#editarUsuario" text="Editar">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font></Button>
+                    <Button fx:id="borrarUsuarioButton" mnemonicParsing="false" onAction="#borrarUsuario" text="Borrar">
+                        <font>
+                            <Font name="System Bold" size="12.0" />
+                        </font></Button>
+                </items>
+                <StackPane.margin>
+                    <Insets />
+                </StackPane.margin>
+            </ToolBar>
+            <TableView fx:id="usuariosTable" onMouseClicked="#activarEditarBorrarUsuario" prefHeight="500.0" prefWidth="620.0" visible="false">
                 <columns>
-                    <TableColumn fx:id="usuarioColumna" prefWidth="110.0" text="Usuario" />
-                    <TableColumn fx:id="emailColumna" prefWidth="165.0" text="Email" />
-                    <TableColumn fx:id="contraseñaColumna" prefWidth="105.0" text="Contraseña" />
-                    <TableColumn fx:id="maestriaCarneColumna" prefWidth="60.0" text="Carne" />
-                    <TableColumn fx:id="maestriaHierbasColumna" prefWidth="60.0" text="Hierbas" />
-                    <TableColumn fx:id="maestriaSangreColumna" prefWidth="60.0" text="Sangre" />
-                    <TableColumn fx:id="maestriaTalaColumna" prefWidth="60.0" text="Tala" />
+                    <TableColumn fx:id="usuarioColumna" editable="false" prefWidth="180.0" resizable="false" text="Usuario" />
+                    <TableColumn fx:id="emailColumna" editable="false" prefWidth="218.0" resizable="false" text="Email" />
+                    <TableColumn fx:id="contraseñaColumna" editable="false" prefWidth="110.0" resizable="false" text="Contraseña" />
+                    <TableColumn fx:id="maestriaCarneColumna" editable="false" prefWidth="60.0" resizable="false" text="Carne" />
+                    <TableColumn fx:id="maestriaHierbasColumna" editable="false" prefWidth="60.0" resizable="false" text="Hierbas" />
+                    <TableColumn fx:id="maestriaSangreColumna" editable="false" prefWidth="60.0" resizable="false" text="Sangre" />
+                    <TableColumn fx:id="maestriaTalaColumna" editable="false" prefWidth="60.0" resizable="false" text="Tala" />
+                    <TableColumn fx:id="administradorColumna" editable="false" prefWidth="60.0" resizable="false" text="Admin" />
                 </columns>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
+            <StackPane.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="45.0" />
+            </StackPane.margin>
             </TableView>
         </children>
     </StackPane>

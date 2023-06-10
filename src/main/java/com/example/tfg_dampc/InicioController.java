@@ -14,8 +14,6 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -53,6 +51,8 @@ public class InicioController {
     @FXML
     private TableColumn<UsuariosDB, Integer> maestriaTalaColumna;
     @FXML
+    private TableColumn<UsuariosDB, Integer> administradorColumna;
+    @FXML
     private TableView<ZonasDB> zonasTable;
     @FXML
     private TableColumn<ZonasDB, String> nombreZonaColumna;
@@ -79,7 +79,15 @@ public class InicioController {
     @FXML
     Button borrarZonaButton;
     @FXML
+    Button añadirUsuarioButton;
+    @FXML
+    Button editarUsuarioButton;
+    @FXML
+    Button borrarUsuarioButton;
+    @FXML
     ZonasController zonasC;
+    @FXML
+    UsuariosController usuariosC;
 
     static MongoClientSettings settings;
 
@@ -97,8 +105,14 @@ public class InicioController {
         editarZonaButton.setBackground(new Background(new BackgroundFill(Color.AQUA, new CornerRadii(3), null)));
         borrarZonaButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(3), null)));
 
+        añadirUsuarioButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, new CornerRadii(3), null)));
+        editarUsuarioButton.setBackground(new Background(new BackgroundFill(Color.AQUA, new CornerRadii(3), null)));
+        borrarUsuarioButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(3), null)));
+
         editarZonaButton.setDisable(true);
         borrarZonaButton.setDisable(true);
+        editarUsuarioButton.setDisable(true);
+        borrarUsuarioButton.setDisable(true);
 
     }
 
@@ -163,8 +177,8 @@ public class InicioController {
                         zonasTable.getItems().clear(); // Borra la tabla
                         mostrarZonas(); // Volver a generar la tabla
                         stage.close();
-                    } else {
-                        mostrarErrorAlerta("Algo salió mal, no se han guardado los cambios");
+                    }  else {
+                        mostrarErrorAlerta("Algo salió mal, es posible de que no se hayan guardado los cambios");
                     }
                 }
             });
@@ -194,6 +208,93 @@ public class InicioController {
             if (result == ButtonType.OK) {
                 if (eliminarZonaDB(zonaSeleccionada)) { // Si devuelve true es que se borró de la DB
                     zonasTable.getItems().remove(zonaSeleccionada); // Borra la fila de la tabla
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void añadirUsuario() throws IOException {
+        UsuariosApplication usuarios = new UsuariosApplication();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Añadir usuario");
+        usuarios.start(stage);
+        usuariosC = usuarios.usuariosController;
+        usuariosC.aceptarButton.setText("Añadir");
+        usuariosC.aceptarButton.setOnAction(actionEvent -> {
+            if (usuariosC.comprobarCamposVacios()) {
+                mostrarErrorAlerta("Uno o más campos estan vacíos");
+
+            } else if (usuariosC.comprobarCamposNumericos()) {
+                mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
+
+            } else {
+                if (usuariosC.añadirUsuarioDB(settings)) { // Si devuelve true es que se añadió correctamente
+                    usuariosTable.getItems().clear(); // Borra la tabla
+                    mostrarUsuarios(); // Volver a generar la tabla
+                    stage.close();
+                } else {
+                    mostrarErrorAlerta("Algo salió mal, no se han guardado los cambios");
+                }
+            }
+        });
+    }
+    @FXML
+    public void editarUsuario() throws IOException {
+        UsuariosDB usuarioSeleccionado = usuariosTable.getSelectionModel().getSelectedItem();
+        if (usuarioSeleccionado != null) {
+            UsuariosApplication usuarios = new UsuariosApplication();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Editar usuario");
+            usuarios.start(stage);
+            usuariosC = usuarios.usuariosController;
+            usuariosC.rellenarUsuariosDatos(usuarioSeleccionado);
+            usuariosC.aceptarButton.setText("Editar");
+            usuariosC.aceptarButton.setOnAction(actionEvent -> {
+                if (usuariosC.comprobarCamposVacios()) {
+                    mostrarErrorAlerta("Uno o más campos estan vacíos");
+
+                } else if (usuariosC.comprobarCamposNumericos()) {
+                    mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
+
+                } else {
+                    if (usuariosC.editarUsuariosDB(settings, usuarioSeleccionado)) { // Si devuelve true es que se editó en la DB
+                        usuariosTable.getItems().clear(); // Borra la tabla
+                        mostrarUsuarios(); // Volver a generar la tabla
+                        stage.close();
+                    } else {
+                        mostrarErrorAlerta("Algo salió mal, es posible de que no se hayan guardado los cambios");
+                    }
+                }
+            });
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atención");
+            alert.setHeaderText(null);
+            alert.setContentText("Seleccione antes un usuario para editarlo");
+            alert.show();
+        }
+    }
+
+    @FXML
+    private void borrarUsuario() {
+        UsuariosDB usuarioSeleccionado = usuariosTable.getSelectionModel().getSelectedItem();
+        if (usuarioSeleccionado != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.setTitle("Borrar zona");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Estás seguro de que deseas borrar al usuario seleccionado?");
+
+            // Obtener la respuesta del usuario
+            ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+            if (result == ButtonType.OK) {
+                if (eliminarUsuarioDB(usuarioSeleccionado)) { // Si devuelve true es que se borró de la DB
+                    usuariosTable.getItems().remove(usuarioSeleccionado); // Borra la fila de la tabla
                 }
             }
         }
@@ -275,6 +376,7 @@ public class InicioController {
             maestriaHierbasColumna.setCellValueFactory(new PropertyValueFactory<>("maestriaHierbas"));
             maestriaSangreColumna.setCellValueFactory(new PropertyValueFactory<>("maestriaSangre"));
             maestriaTalaColumna.setCellValueFactory(new PropertyValueFactory<>("maestriaTala"));
+            administradorColumna.setCellValueFactory(new PropertyValueFactory<>("administrador"));
             usuariosTable.setItems(usuariosObservableList);
             progressBar.setVisible(false);
             usuariosTable.setVisible(true);
@@ -335,6 +437,7 @@ public class InicioController {
                 usuario.setMaestriaHierbas(document.getInteger("maestriaHierbas"));
                 usuario.setMaestriaSangre(document.getInteger("maestriaSangre"));
                 usuario.setMaestriaTala(document.getInteger("maestriaTala"));
+                usuario.setAdministrador(document.getInteger("administrador"));
                 usuariosList.add(usuario); // Añadir usuario a la lista
             }
         } catch (MongoException e) {
@@ -400,14 +503,103 @@ public class InicioController {
         return v;
     }
 
-    public void activarEditarBorrar() {
+    public static Boolean eliminarUsuarioDB(UsuariosDB usuario) {
+        Boolean v = false;
+        try {
+            MongoClient mongoClient = MongoClients.create(settings);
+            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
+            MongoCollection<Document> collection = database.getCollection("Usuarios");
+            Bson filter = Filters.eq("_id", usuario.get_id());
+            collection.deleteOne(filter); // Eliminar doc de la DB
+            v = true;
+
+        } catch (MongoException e) {
+            e.printStackTrace();
+            mostrarErrorAlerta("Error de servidor. Vuelve a intentarlo más tarde");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarErrorAlerta("Error de servidor. Vuelve a intentarlo más tarde"); //Mostrar alerta al usuario
+        }
+        return v;
+    }
+
+    public void activarEditarBorrarZona() {
         ZonasDB zonaSeleccionada = zonasTable.getSelectionModel().getSelectedItem();
         if (zonaSeleccionada != null) {
             // Si hay una fila seleccionada habilita los botones
             editarZonaButton.setDisable(false);
             borrarZonaButton.setDisable(false);
+
+            // Crear el menú contextual y las opciones de menú
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem editarMenuItem = new MenuItem("Editar");
+            MenuItem borrarMenuItem = new MenuItem("Borrar");
+
+            editarMenuItem.setOnAction(event -> {
+                try {
+                    editarZona();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    mostrarErrorAlerta("Algo salió mal, no se han guardado los cambios");
+                }
+            });
+
+            borrarMenuItem.setOnAction(event -> {
+                borrarZona();
+            });
+
+            // Agregar las opciones al menú
+            contextMenu.getItems().addAll(editarMenuItem, borrarMenuItem);
+
+            zonasTable.setContextMenu(contextMenu); // Asignar el menú a la tabla
+        } else {
+            // Si no hay fila seleccionada, deshabilita los botones y elimina el menú contextual
+            editarZonaButton.setDisable(true);
+            borrarZonaButton.setDisable(true);
+            zonasTable.setContextMenu(null);
         }
     }
+
+
+    public void activarEditarBorrarUsuario() {
+        UsuariosDB usuarioSeleccionado = usuariosTable.getSelectionModel().getSelectedItem();
+        if (usuarioSeleccionado != null) {
+            // Si hay una fila seleccionada, habilita los botones
+            editarUsuarioButton.setDisable(false);
+            borrarUsuarioButton.setDisable(false);
+
+            // Crear el menú contextual y las opciones de menú
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem editarMenuItem = new MenuItem("Editar");
+            MenuItem borrarMenuItem = new MenuItem("Borrar");
+
+            editarMenuItem.setOnAction(event -> {
+                try {
+                    editarUsuario();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    mostrarErrorAlerta("Algo salió mal, no se han guardado los cambios");
+                }
+            });
+
+            borrarMenuItem.setOnAction(event -> {
+                borrarUsuario();
+            });
+
+            // Agregar las opciones al menú contextual
+            contextMenu.getItems().addAll(editarMenuItem, borrarMenuItem);
+
+            // Asignar el menú contextual a la tabla
+            usuariosTable.setContextMenu(contextMenu);
+        } else {
+            // Si no hay fila seleccionada, deshabilita los botones y elimina el menú contextual
+            editarUsuarioButton.setDisable(true);
+            borrarUsuarioButton.setDisable(true);
+            usuariosTable.setContextMenu(null);
+        }
+    }
+
 
     public static void mostrarErrorAlerta(String titulo) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
