@@ -1,14 +1,20 @@
 package com.example.tfg_dampc;
 
 import com.example.tfg_dampc.db.UsuariosDB;
+import com.example.tfg_dampc.db.ZonasDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +31,8 @@ public class InicioApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("inicio-view.fxml"));
         Parent root = loader.load();
         inicioController = loader.getController();
+
+        // Obtener los 3 botones y añadir un icono a estos
         inicioButton = inicioController.inicioButton;
         ImageView imageViewHome = new ImageView(new Image(getClass().getResourceAsStream("home.png")));
         imageViewHome.setFitHeight(20);
@@ -42,6 +50,7 @@ public class InicioApplication extends Application {
         salirButton.setGraphic(imageViewSalir);
         Scene scene = new Scene(root, 820, 640);
         stage.setTitle("Inicio");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

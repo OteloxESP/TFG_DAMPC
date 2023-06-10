@@ -7,8 +7,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tfg_dampc.InicioController">
+<StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.InicioController">
     <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
         <items>
             <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" prefWidth="110.0" text="Inicio" />
@@ -22,15 +23,37 @@
             <Insets top="40.0" />
         </StackPane.margin>
       <children>
-          <TableView fx:id="zonasTable" prefHeight="500.0" prefWidth="620.0" visible="false">
+          <ToolBar fx:id="toolbarAcciones" prefHeight="40.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
+              <items>
+                  <Button fx:id="añadirZonaButton" mnemonicParsing="false" onAction="#añadirZona" text="Añadir">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font></Button>
+                  <Button fx:id="editarZonaButton" mnemonicParsing="false" onAction="#editarZona" text="Editar">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font></Button>
+                  <Button fx:id="borrarZonaButton" mnemonicParsing="false" onAction="#borrarZona" text="Borrar">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font></Button>
+              </items>
+              <StackPane.margin>
+                  <Insets />
+              </StackPane.margin>
+          </ToolBar>
+          <TableView fx:id="zonasTable" onMouseClicked="#activarEditarBorrar" prefHeight="500.0" prefWidth="620.0" visible="false">
            <columns>
-               <TableColumn fx:id="nombreZonaColumna" prefWidth="200.0" text="Zona" />
-               <TableColumn fx:id="tipoZonaColumna" prefWidth="165.0" text="Tipo de zona" />
-               <TableColumn fx:id="item1Columna" prefWidth="105.0" text="Item 1" />
-               <TableColumn fx:id="item2Columna" prefWidth="60.0" text="Item 2" />
-               <TableColumn fx:id="item3Columna" prefWidth="60.0" text="Item 3" />
-               <TableColumn fx:id="item4Columna" prefWidth="60.0" text="Item 4" />
+               <TableColumn fx:id="nombreZonaColumna" editable="false" prefWidth="270.0" text="Zona" />
+               <TableColumn fx:id="tipoZonaColumna" editable="false" prefWidth="130.0" text="Tipo de zona" />
+               <TableColumn fx:id="item1Columna" editable="false" prefWidth="105.0" text="Item 1" />
+               <TableColumn fx:id="item2Columna" editable="false" prefWidth="105.0" text="Item 2" />
+               <TableColumn fx:id="item3Columna" editable="false" prefWidth="105.0" text="Item 3" />
+               <TableColumn fx:id="item4Columna" editable="false" prefWidth="105.0" text="Item 4" />
            </columns>
+            <StackPane.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="45.0" />
+            </StackPane.margin>
          </TableView>
       </children>
     </StackPane>
@@ -55,13 +78,4 @@
             </TableView>
         </children>
     </StackPane>
-    <!--<Pane fx:id="configuracionPane" prefHeight="540.0" prefWidth="620.0" visible="false" StackPane.alignment="CENTER">
-        <children>
-            <Label alignment="CENTER" layoutX="178.0" layoutY="215.0" prefHeight="17.0" prefWidth="220.0" text="Hola 3" />
-        </children>
-        <StackPane.margin>
-            <Insets top="40.0" />
-        </StackPane.margin>
-    </Pane>-->
-
 </StackPane>

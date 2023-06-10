@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="rootNode" onKeyPressed="#teclaPulsada" prefHeight="320.0" prefWidth="360.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.ZonasController">
+   <children>
+      <Label layoutX="18.0" layoutY="14.0" text="Nombre" />
+      <TextField fx:id="nombreZonaTextField" layoutX="18.0" layoutY="31.0" prefHeight="25.0" prefWidth="320.0" promptText="Nombre" />
+      <Label layoutX="18.0" layoutY="66.0" prefHeight="17.0" prefWidth="34.0" text="Tipo" />
+      <ChoiceBox fx:id="tipoZonaChoiceBox" layoutX="18.0" layoutY="83.0" prefWidth="150.0" />
+      <Label layoutX="18.0" layoutY="146.0" text="Item especial zona" />
+      <TextField fx:id="item1TextField" layoutX="18.0" layoutY="163.0" promptText="0" />
+      <Label layoutX="186.0" layoutY="146.0" text="Polvo de espíritu antiguo" />
+      <TextField fx:id="item2TextField" layoutX="186.0" layoutY="163.0" promptText="0" />
+      <Label layoutX="18.0" layoutY="204.0" text="Polvo de hadas" />
+      <TextField fx:id="item3TextField" layoutX="18.0" layoutY="221.0" promptText="0" />
+      <Label layoutX="186.0" layoutY="204.0" text="Caphranitas" />
+      <TextField fx:id="item4TextField" layoutX="186.0" layoutY="221.0" promptText="0" />
+      <Button fx:id="cancelarButton" layoutX="203.0" layoutY="275.0" mnemonicParsing="false" onAction="#cerrarZonasVentana" text="Cancelar" />
+      <Button fx:id="aceptarButton" layoutX="274.0" layoutY="275.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Añadir" />
+   </children>
+</Pane>

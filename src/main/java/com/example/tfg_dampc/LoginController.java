@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.controlsfx.dialog.ProgressDialog;
@@ -108,7 +109,7 @@ public class LoginController {
             } catch (MongoException e) {
                 e.printStackTrace();
                 ocultarErrorLabel(); //Ocultar label al usuario y quitar estilos a los campos
-                mostrarErrorAlerta("Error de servidor"); //Mostrar alerta al usuario
+                mostrarErrorAlerta("Error de servidor. Vuelve a intentarlo más tarde"); //Mostrar alerta al usuario
             }
         }
     }
@@ -143,6 +144,7 @@ public class LoginController {
 
     public void mostrarErrorAlerta(String titulo){
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initModality(Modality.APPLICATION_MODAL);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(titulo);
