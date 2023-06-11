@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 <StackPane alignment="BOTTOM_CENTER" prefHeight="540.0" prefWidth="620.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.InicioController">
-    <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
+    <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;" StackPane.alignment="TOP_CENTER">
         <items>
             <Button fx:id="inicioButton" mnemonicParsing="false" onAction="#mostrarInicio" prefWidth="110.0" text="Inicio" />
             <Button fx:id="usuariosButton" mnemonicParsing="false" onAction="#mostrarUsuarios" prefWidth="110.0" text="Usuarios" />
@@ -23,9 +23,9 @@
             <Insets top="40.0" />
         </StackPane.margin>
       <children>
-          <ToolBar fx:id="toolbarAcciones" prefHeight="40.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
+          <ToolBar prefHeight="40.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
               <items>
-                  <Button fx:id="añadirZonaButton" mnemonicParsing="false" onAction="#añadirZona" text="Añadir">
+                  <Button fx:id="anadirZonaButton" mnemonicParsing="false" onAction="#anadirZona" text="Añadir">
                   <font>
                      <Font name="System Bold" size="12.0" />
                   </font></Button>
@@ -64,7 +64,7 @@
         <children>
             <ToolBar prefHeight="40.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
                 <items>
-                    <Button fx:id="añadirUsuarioButton" mnemonicParsing="false" onAction="#añadirUsuario" text="Añadir">
+                    <Button fx:id="anadirUsuarioButton" mnemonicParsing="false" onAction="#anadirUsuario" text="Añadir">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font></Button>
@@ -85,7 +85,7 @@
                 <columns>
                     <TableColumn fx:id="usuarioColumna" editable="false" prefWidth="180.0" resizable="false" text="Usuario" />
                     <TableColumn fx:id="emailColumna" editable="false" prefWidth="218.0" resizable="false" text="Email" />
-                    <TableColumn fx:id="contraseñaColumna" editable="false" prefWidth="110.0" resizable="false" text="Contraseña" />
+                    <TableColumn fx:id="contrasenaColumna" editable="false" prefWidth="110.0" resizable="false" text="Contraseña" />
                     <TableColumn fx:id="maestriaCarneColumna" editable="false" prefWidth="60.0" resizable="false" text="Carne" />
                     <TableColumn fx:id="maestriaHierbasColumna" editable="false" prefWidth="60.0" resizable="false" text="Hierbas" />
                     <TableColumn fx:id="maestriaSangreColumna" editable="false" prefWidth="60.0" resizable="false" text="Sangre" />

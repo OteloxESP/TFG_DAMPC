@@ -39,7 +39,7 @@ public class InicioController {
     @FXML
     private TableColumn<UsuariosDB, String> usuarioColumna;
     @FXML
-    private TableColumn<UsuariosDB, String> contraseñaColumna;
+    private TableColumn<UsuariosDB, String> contrasenaColumna;
     @FXML
     private TableColumn<UsuariosDB, String> emailColumna;
     @FXML
@@ -73,13 +73,13 @@ public class InicioController {
     @FXML
     Button salirButton;
     @FXML
-    Button añadirZonaButton;
+    Button anadirZonaButton;
     @FXML
     Button editarZonaButton;
     @FXML
     Button borrarZonaButton;
     @FXML
-    Button añadirUsuarioButton;
+    Button anadirUsuarioButton;
     @FXML
     Button editarUsuarioButton;
     @FXML
@@ -90,6 +90,7 @@ public class InicioController {
     UsuariosController usuariosC;
 
     static MongoClientSettings settings;
+    static MongoDatabase database;
 
     public void initialize() {
         ServerApi serverApi = ServerApi.builder()
@@ -99,13 +100,21 @@ public class InicioController {
                 .applyConnectionString(new ConnectionString(conexionURL))
                 .serverApi(serverApi)
                 .build();
+        try{
+            MongoClient mongoClient = MongoClients.create(settings);
+            database = mongoClient.getDatabase("bdoHelp");
+
+        }catch (MongoException e){
+            mostrarErrorAlerta("Error de servidor. Vuelve a intentarlo más tarde");
+        }
+
 
         // Asignar un color a los botones
-        añadirZonaButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, new CornerRadii(3), null)));
+        anadirZonaButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, new CornerRadii(3), null)));
         editarZonaButton.setBackground(new Background(new BackgroundFill(Color.AQUA, new CornerRadii(3), null)));
         borrarZonaButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(3), null)));
 
-        añadirUsuarioButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, new CornerRadii(3), null)));
+        anadirUsuarioButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, new CornerRadii(3), null)));
         editarUsuarioButton.setBackground(new Background(new BackgroundFill(Color.AQUA, new CornerRadii(3), null)));
         borrarUsuarioButton.setBackground(new Background(new BackgroundFill(Color.RED, new CornerRadii(3), null)));
 
@@ -126,7 +135,7 @@ public class InicioController {
     }
 
     @FXML
-    public void añadirZona() throws IOException {
+    public void anadirZona() throws IOException {
         ZonasApplication zonas = new ZonasApplication();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -142,7 +151,7 @@ public class InicioController {
                 mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
 
             } else {
-                if (zonasC.añadirZonaDB(settings)) { // Si devuelve true es que se añadió correctamente
+                if (zonasC.anadirZonaDB(settings)) { // Si devuelve true es que se añadió correctamente
                     zonasTable.getItems().clear(); // Borra la tabla
                     mostrarZonas(); // Volver a generar la tabla
                     editarZonaButton.setDisable(true);
@@ -212,13 +221,15 @@ public class InicioController {
             if (result == ButtonType.OK) {
                 if (eliminarZonaDB(zonaSeleccionada)) { // Si devuelve true es que se borró de la DB
                     zonasTable.getItems().remove(zonaSeleccionada); // Borra la fila de la tabla
+                    editarZonaButton.setDisable(true);
+                    borrarZonaButton.setDisable(true);
                 }
             }
         }
     }
 
     @FXML
-    public void añadirUsuario() throws IOException {
+    public void anadirUsuario() throws IOException {
         UsuariosApplication usuarios = new UsuariosApplication();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -233,14 +244,17 @@ public class InicioController {
             } else if (usuariosC.comprobarCamposNumericos()) {
                 mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
 
-            }else if(usuariosC.existeUsuario(settings,null)){
+            }else if(usuariosC.existeUsuario(null)){
                 mostrarErrorAlerta("El usuario ya existe");
-            }else if (usuariosC.existeCorreo(settings, null)) {
+            }else if (usuariosC.existeCorreo(null)) {
                 mostrarErrorAlerta("El correo ya existe");
             }else if (usuariosC.nivelMaestriaSuperior()){
                 mostrarErrorAlerta("El nivel de maestría no puede ser superior a 2000");
+            }else if (!usuariosC.correoValido()){
+                mostrarErrorAlerta("Introduce un correo válido ej: hola@gm.co, hola@gmail.es");
+
             } else {
-                if (usuariosC.añadirUsuarioDB(settings)) { // Si devuelve true es que se añadió correctamente
+                if (usuariosC.anadirUsuarioDB()) { // Si devuelve true es que se añadió correctamente
                     usuariosTable.getItems().clear(); // Borra la tabla
                     mostrarUsuarios(); // Volver a generar la tabla
                     editarUsuarioButton.setDisable(true);
@@ -271,17 +285,20 @@ public class InicioController {
                 } else if (usuariosC.comprobarCamposNumericos()) {
                     mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
 
-                }else if(usuariosC.existeUsuario(settings,usuarioSeleccionado)){
+                }else if(usuariosC.existeUsuario(usuarioSeleccionado)){
                     mostrarErrorAlerta("El usuario ya existe");
 
-                }else if (usuariosC.existeCorreo(settings, usuarioSeleccionado)){
+                }else if (usuariosC.existeCorreo(usuarioSeleccionado)){
                     mostrarErrorAlerta("El correo ya existe");
 
                 }else if (usuariosC.nivelMaestriaSuperior()){
                     mostrarErrorAlerta("El nivel de maestría no puede ser superior a 2000");
 
+                }else if (!usuariosC.correoValido()){
+                    mostrarErrorAlerta("Introduce un correo válido");
+
                 } else {
-                    if (usuariosC.editarUsuariosDB(settings, usuarioSeleccionado)) { // Si devuelve true es que se editó en la DB
+                    if (usuariosC.editarUsuariosDB(usuarioSeleccionado)) { // Si devuelve true es que se editó en la DB
                         usuariosTable.getItems().clear(); // Borra la tabla
                         mostrarUsuarios(); // Volver a generar la tabla
                         editarUsuarioButton.setDisable(true);
@@ -318,6 +335,8 @@ public class InicioController {
             if (result == ButtonType.OK) {
                 if (eliminarUsuarioDB(usuarioSeleccionado)) { // Si devuelve true es que se borró de la DB
                     usuariosTable.getItems().remove(usuarioSeleccionado); // Borra la fila de la tabla
+                    editarUsuarioButton.setDisable(true);
+                    borrarUsuarioButton.setDisable(true);
                 }
             }
         }
@@ -393,7 +412,7 @@ public class InicioController {
             List<UsuariosDB> listaUsuarios = obtenerUsuariosTask.getValue();
             ObservableList<UsuariosDB> usuariosObservableList = FXCollections.observableArrayList(listaUsuarios);
             usuarioColumna.setCellValueFactory(new PropertyValueFactory<>("usuario"));
-            contraseñaColumna.setCellValueFactory(new PropertyValueFactory<>("contraseña"));
+            contrasenaColumna.setCellValueFactory(new PropertyValueFactory<>("contrasena"));
             emailColumna.setCellValueFactory(new PropertyValueFactory<>("email"));
             maestriaCarneColumna.setCellValueFactory(new PropertyValueFactory<>("maestriaCarne"));
             maestriaHierbasColumna.setCellValueFactory(new PropertyValueFactory<>("maestriaHierbas"));
@@ -446,15 +465,13 @@ public class InicioController {
         List<UsuariosDB> usuariosList = new ArrayList<>();
 
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Usuarios");
 
             for (Document document : collection.find()) {
                 UsuariosDB usuario = new UsuariosDB();
                 usuario.set_id(document.getObjectId("_id"));
                 usuario.setUsuario(document.getString("usuario"));
-                usuario.setContraseña(document.getString("contraseña"));
+                usuario.setContrasena(document.getString("contraseña"));
                 usuario.setEmail(document.getString("email"));
                 usuario.setMaestriaCarne(document.getInteger("maestriaCarne"));
                 usuario.setMaestriaHierbas(document.getInteger("maestriaHierbas"));
@@ -478,8 +495,6 @@ public class InicioController {
     public static List<ZonasDB> obtenerZonasDB() {
         List<ZonasDB> zonasList = new ArrayList<>();
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Zonas");
 
             for (Document document : collection.find()) {
@@ -508,8 +523,6 @@ public class InicioController {
     public static Boolean eliminarZonaDB(ZonasDB zona) {
         Boolean v = false;
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Zonas");
             Bson filter = Filters.eq("_id", zona.get_id());
             collection.deleteOne(filter); // Eliminar doc de la DB
@@ -529,8 +542,6 @@ public class InicioController {
     public static Boolean eliminarUsuarioDB(UsuariosDB usuario) {
         Boolean v = false;
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Usuarios");
             Bson filter = Filters.eq("_id", usuario.get_id());
             collection.deleteOne(filter); // Eliminar doc de la DB

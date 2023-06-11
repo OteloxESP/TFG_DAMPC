@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 public class UsuariosDB {
     ObjectId _id;
     private SimpleStringProperty usuario;
-    private SimpleStringProperty contraseña;
+    private SimpleStringProperty contrasena;
     private SimpleStringProperty email;
     private SimpleIntegerProperty maestriaCarne;
     private SimpleIntegerProperty maestriaHierbas;
@@ -36,12 +36,12 @@ public class UsuariosDB {
         this.usuario = new SimpleStringProperty(usuario);
     }
 
-    public String getContraseña() {
-        return contraseña.get();
+    public String getContrasena() {
+        return contrasena.get();
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = new SimpleStringProperty(contraseña);
+    public void setContrasena(String contrasena) {
+        this.contrasena = new SimpleStringProperty(contrasena);
     }
 
     public String getEmail() {

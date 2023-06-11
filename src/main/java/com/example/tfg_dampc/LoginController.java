@@ -12,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.bson.Document;
-import org.controlsfx.dialog.ProgressDialog;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;

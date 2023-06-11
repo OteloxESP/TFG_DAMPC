@@ -14,7 +14,7 @@
         <TextField fx:id="correoTextField" layoutX="18.0" layoutY="81.0" prefHeight="25.0" prefWidth="320.0"
                    promptText="Correo"/>
         <Label layoutX="18.0" layoutY="116.0" prefHeight="17.0" prefWidth="85.0" text="Contraseña"/>
-        <TextField fx:id="contraseñaTextField" layoutX="18.0" layoutY="132.0" prefHeight="25.0" prefWidth="320.0"
+        <TextField fx:id="contrasenaTextField" layoutX="18.0" layoutY="132.0" prefHeight="25.0" prefWidth="320.0"
                    promptText="Contraseña"/>
         <CheckBox fx:id="administradorCheck" layoutX="234.0" layoutY="185.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="102.0"
                   text="Administrador"/>

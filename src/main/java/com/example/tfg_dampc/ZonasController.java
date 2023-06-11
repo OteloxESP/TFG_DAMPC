@@ -7,7 +7,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -49,7 +48,7 @@ public class ZonasController {
         item4TextField.setTooltip(new Tooltip("Multiplicador por cada 50 de maestría (ej: (160/50=3)*multiplicador"));
     }
 
-    public boolean añadirZonaDB(MongoClientSettings settings){
+    public boolean anadirZonaDB(MongoClientSettings settings){
         boolean v = false;
 
         try {
@@ -79,7 +78,7 @@ public class ZonasController {
     }
 
     public boolean editarZonaDB(MongoClientSettings settings, ZonasDB zona) {
-        boolean v = false;
+        Boolean v = false;
 
         try {
             MongoClient mongoClient = MongoClients.create(settings);
@@ -97,7 +96,7 @@ public class ZonasController {
                     .append("item4", Integer.parseInt(item4TextField.getText()));
             Bson update = new Document("$set", cambios);
 
-            UpdateResult result = collection.updateOne(filter, update); // Realizar la update en la db.
+            collection.updateOne(filter, update); // Realizar la update en la db.
             v = true;
 
         } catch (MongoException e) {

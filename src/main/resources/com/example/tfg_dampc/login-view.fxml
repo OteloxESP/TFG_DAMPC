@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" onKeyPressed="#teclaPulsada" spacing="10.0" style="-fx-background-color: #C6C3C3" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tfg_dampc.LoginController">
+<VBox alignment="CENTER" onKeyPressed="#teclaPulsada" spacing="10.0" style="-fx-background-color: #C6C3C3" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.tfg_dampc.LoginController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>

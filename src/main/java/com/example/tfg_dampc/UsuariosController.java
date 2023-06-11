@@ -1,9 +1,7 @@
 package com.example.tfg_dampc;
 
 import com.example.tfg_dampc.db.UsuariosDB;
-import com.example.tfg_dampc.db.ZonasDB;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoException;
+import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -16,10 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import net.synedra.validatorfx.Check;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UsuariosController {
     public Button aceptarButton;
@@ -31,7 +31,7 @@ public class UsuariosController {
     @FXML
     public TextField correoTextField;
     @FXML
-    public TextField contraseñaTextField;
+    public TextField contrasenaTextField;
     @FXML
     public TextField talaTextField;
     @FXML
@@ -42,8 +42,25 @@ public class UsuariosController {
     public TextField hierbasTextField;
     @FXML
     public CheckBox administradorCheck;
+    static MongoClientSettings settings;
+    static MongoDatabase database;
+    static String conexionURL = "mongodb+srv://Otelox:I3LvJTkOkZsqDm4j@cluster0.shwupsp.mongodb.net/?retryWrites=true&w=majority";
 
     public void initialize() {
+        ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+        settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(conexionURL))
+                .serverApi(serverApi)
+                .build();
+        try{
+            MongoClient mongoClient = MongoClients.create(settings);
+            database = mongoClient.getDatabase("bdoHelp");
+
+        }catch (MongoException e){
+            e.printStackTrace();
+        }
         // Aplicar tooltips
         usuarioTextField.setTooltip(new Tooltip("Introduce el usuario"));
         correoTextField.setTooltip(new Tooltip("Introduce el correo"));
@@ -53,15 +70,12 @@ public class UsuariosController {
         carneTextField.setTooltip(new Tooltip("Introduce el nivel de maestría. Max 2000"));
     }
 
-    public boolean añadirUsuarioDB(MongoClientSettings settings){
+    public boolean anadirUsuarioDB(){
         boolean v = false;
 
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Usuarios");
-
-            String contrasenaEncriptada = BCrypt.hashpw(contraseñaTextField.getText(), BCrypt.gensalt());
+            String contrasenaEncriptada = BCrypt.hashpw(contrasenaTextField.getText(), BCrypt.gensalt());
             int admin = 0;
             if (administradorCheck.isSelected()){
                 admin = 1;
@@ -89,12 +103,10 @@ public class UsuariosController {
         return v;
     }
 
-    public boolean editarUsuariosDB(MongoClientSettings settings, UsuariosDB usuario) {
+    public boolean editarUsuariosDB(UsuariosDB usuario) {
         boolean v = false;
 
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Usuarios");
             Bson filter = Filters.eq("_id", usuario.get_id()); // Crear un Bson filter para identificar el documento a actualizar
             int admin = 0;
@@ -136,8 +148,8 @@ public class UsuariosController {
         // Obtener y rellenar los campos con los datos de la zona
         usuarioTextField.setText(usuarioSeleccionado.getUsuario());
         correoTextField.setText(usuarioSeleccionado.getEmail());
-        contraseñaTextField.setText(usuarioSeleccionado.getContraseña());
-        contraseñaTextField.setEditable(false);
+        contrasenaTextField.setText(usuarioSeleccionado.getContrasena());
+        contrasenaTextField.setEditable(false);
         if (usuarioSeleccionado.getAdministrador()==1){
             administradorCheck.setSelected(true);
         }else{
@@ -165,11 +177,11 @@ public class UsuariosController {
         }else{
             correoTextField.setStyle(null);
         }
-        if (contraseñaTextField.getText().isEmpty()){
+        if (contrasenaTextField.getText().isEmpty()){
             v = true;
-            contraseñaTextField.setStyle("-fx-border-color: red;");
+            contrasenaTextField.setStyle("-fx-border-color: red;");
         }else{
-            contraseñaTextField.setStyle(null);
+            contrasenaTextField.setStyle(null);
         }
         if (carneTextField.getText().isEmpty()){
             v = true;
@@ -231,11 +243,9 @@ public class UsuariosController {
         return v;
     }
 
-    public boolean existeUsuario(MongoClientSettings settings, UsuariosDB usuario){
+    public boolean existeUsuario(UsuariosDB usuario){
         Boolean v = false;
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Usuarios");
             Bson filter;
             if (usuario != null){
@@ -265,11 +275,9 @@ public class UsuariosController {
         return v;
     }
 
-    public boolean existeCorreo(MongoClientSettings settings, UsuariosDB usuario){
+    public boolean existeCorreo(UsuariosDB usuario){
         Boolean v = false;
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Usuarios");
             Bson filter;
             if (usuario != null){
@@ -327,6 +335,18 @@ public class UsuariosController {
             talaTextField.setStyle(null);
         }
         return v;
+    }
+
+    public boolean correoValido (){
+        String patron = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern pattern = Pattern.compile(patron);
+        Matcher matcher = pattern.matcher(correoTextField.getText());
+        if (!matcher.matches()){
+            correoTextField.setStyle("-fx-border-color: red;");
+        }else{
+            correoTextField.setStyle(null);
+        }
+        return matcher.matches();
     }
 
     @FXML
