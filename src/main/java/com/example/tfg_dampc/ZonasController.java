@@ -36,8 +36,25 @@ public class ZonasController {
     public TextField item3TextField;
     @FXML
     public TextField item4TextField;
-
+    static MongoClientSettings settings;
+    static MongoDatabase database;
+    static String conexionURL = "mongodb+srv://Otelox:I3LvJTkOkZsqDm4j@cluster0.shwupsp.mongodb.net/?retryWrites=true&w=majority";
     public void initialize() {
+        ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+        settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(conexionURL))
+                .serverApi(serverApi)
+                .build();
+        try{
+            MongoClient mongoClient = MongoClients.create(settings);
+            database = mongoClient.getDatabase("bdoHelp");
+
+        }catch (MongoException e){
+            e.printStackTrace();
+        }
+
         tipoZonaChoiceBox.getItems().addAll("Tala","Hierbas","Sangre","Carne"); // Añadir las opciones al selector
 
         // Aplicar tooltips
@@ -52,8 +69,6 @@ public class ZonasController {
         boolean v = false;
 
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Zonas");
 
             // Crear un documento con los datos de la zona
@@ -81,8 +96,6 @@ public class ZonasController {
         Boolean v = false;
 
         try {
-            MongoClient mongoClient = MongoClients.create(settings);
-            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
             MongoCollection<Document> collection = database.getCollection("Zonas");
             Bson filter = Filters.eq("_id", zona.get_id()); // Crear un Bson filter para identificar el documento a actualizar
 
