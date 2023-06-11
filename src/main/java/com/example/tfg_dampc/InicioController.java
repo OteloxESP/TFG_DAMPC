@@ -145,6 +145,8 @@ public class InicioController {
                 if (zonasC.añadirZonaDB(settings)) { // Si devuelve true es que se añadió correctamente
                     zonasTable.getItems().clear(); // Borra la tabla
                     mostrarZonas(); // Volver a generar la tabla
+                    editarZonaButton.setDisable(true);
+                    borrarZonaButton.setDisable(true);
                     stage.close();
                 } else {
                     mostrarErrorAlerta("Algo salió mal, no se han guardado los cambios");
@@ -176,6 +178,8 @@ public class InicioController {
                     if (zonasC.editarZonaDB(settings, zonaSeleccionada)) { // Si devuelve true es que se editó en la DB
                         zonasTable.getItems().clear(); // Borra la tabla
                         mostrarZonas(); // Volver a generar la tabla
+                        editarZonaButton.setDisable(true);
+                        borrarZonaButton.setDisable(true);
                         stage.close();
                     }  else {
                         mostrarErrorAlerta("Algo salió mal, es posible de que no se hayan guardado los cambios");
@@ -229,10 +233,18 @@ public class InicioController {
             } else if (usuariosC.comprobarCamposNumericos()) {
                 mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
 
+            }else if(usuariosC.existeUsuario(settings,null)){
+                mostrarErrorAlerta("El usuario ya existe");
+            }else if (usuariosC.existeCorreo(settings, null)) {
+                mostrarErrorAlerta("El correo ya existe");
+            }else if (usuariosC.nivelMaestriaSuperior()){
+                mostrarErrorAlerta("El nivel de maestría no puede ser superior a 2000");
             } else {
                 if (usuariosC.añadirUsuarioDB(settings)) { // Si devuelve true es que se añadió correctamente
                     usuariosTable.getItems().clear(); // Borra la tabla
                     mostrarUsuarios(); // Volver a generar la tabla
+                    editarUsuarioButton.setDisable(true);
+                    borrarUsuarioButton.setDisable(true);
                     stage.close();
                 } else {
                     mostrarErrorAlerta("Algo salió mal, no se han guardado los cambios");
@@ -259,10 +271,21 @@ public class InicioController {
                 } else if (usuariosC.comprobarCamposNumericos()) {
                     mostrarErrorAlerta("Los campos de los items tienen que ser numericos");
 
+                }else if(usuariosC.existeUsuario(settings,usuarioSeleccionado)){
+                    mostrarErrorAlerta("El usuario ya existe");
+
+                }else if (usuariosC.existeCorreo(settings, usuarioSeleccionado)){
+                    mostrarErrorAlerta("El correo ya existe");
+
+                }else if (usuariosC.nivelMaestriaSuperior()){
+                    mostrarErrorAlerta("El nivel de maestría no puede ser superior a 2000");
+
                 } else {
                     if (usuariosC.editarUsuariosDB(settings, usuarioSeleccionado)) { // Si devuelve true es que se editó en la DB
                         usuariosTable.getItems().clear(); // Borra la tabla
                         mostrarUsuarios(); // Volver a generar la tabla
+                        editarUsuarioButton.setDisable(true);
+                        borrarUsuarioButton.setDisable(true);
                         stage.close();
                     } else {
                         mostrarErrorAlerta("Algo salió mal, es posible de que no se hayan guardado los cambios");

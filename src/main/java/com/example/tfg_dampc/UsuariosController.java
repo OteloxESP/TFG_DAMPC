@@ -46,10 +46,11 @@ public class UsuariosController {
     public void initialize() {
         // Aplicar tooltips
         usuarioTextField.setTooltip(new Tooltip("Introduce el usuario"));
-        /*item1TextField.setTooltip(new Tooltip("Multiplicador por cada 50 de maestría (ej: (160/50=3)*multiplicador"));
-        item2TextField.setTooltip(new Tooltip("Multiplicador por cada 50 de maestría (ej: (160/50=3)*multiplicador"));
-        item3TextField.setTooltip(new Tooltip("Multiplicador por cada 50 de maestría (ej: (160/50=3)*multiplicador"));
-        item4TextField.setTooltip(new Tooltip("Multiplicador por cada 50 de maestría (ej: (160/50=3)*multiplicador"));*/
+        correoTextField.setTooltip(new Tooltip("Introduce el correo"));
+        talaTextField.setTooltip(new Tooltip("Introduce el nivel de maestría. Max 2000"));
+        sangreTextField.setTooltip(new Tooltip("Introduce el nivel de maestría. Max 2000"));
+        hierbasTextField.setTooltip(new Tooltip("Introduce el nivel de maestría. Max 2000"));
+        carneTextField.setTooltip(new Tooltip("Introduce el nivel de maestría. Max 2000"));
     }
 
     public boolean añadirUsuarioDB(MongoClientSettings settings){
@@ -227,6 +228,104 @@ public class UsuariosController {
             talaTextField.setStyle(null);
         }
 
+        return v;
+    }
+
+    public boolean existeUsuario(MongoClientSettings settings, UsuariosDB usuario){
+        Boolean v = false;
+        try {
+            MongoClient mongoClient = MongoClients.create(settings);
+            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
+            MongoCollection<Document> collection = database.getCollection("Usuarios");
+            Bson filter;
+            if (usuario != null){
+                filter = Filters.and(
+                        Filters.eq("usuario", usuarioTextField.getText()),
+                        Filters.ne("_id", usuario.get_id()));
+            }else{
+                filter = Filters.eq("usuario", usuarioTextField.getText());
+            }
+
+            Document result = collection.find(filter).first();
+            if (result != null) {
+                v = true; // El usuario existe
+                usuarioTextField.setStyle("-fx-border-color: red;");
+            }else{
+                usuarioTextField.setStyle(null);
+            }
+
+
+        }catch (MongoException e){
+            e.printStackTrace();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return v;
+    }
+
+    public boolean existeCorreo(MongoClientSettings settings, UsuariosDB usuario){
+        Boolean v = false;
+        try {
+            MongoClient mongoClient = MongoClients.create(settings);
+            MongoDatabase database = mongoClient.getDatabase("bdoHelp");
+            MongoCollection<Document> collection = database.getCollection("Usuarios");
+            Bson filter;
+            if (usuario != null){
+                filter = Filters.and(
+                        Filters.eq("email", correoTextField.getText()),
+                        Filters.ne("_id", usuario.get_id()));
+            }else{
+                filter = Filters.eq("email", correoTextField.getText());
+            }
+
+            Document result = collection.find(filter).first();
+            if (result != null) {
+                v = true; // El usuario existe
+                correoTextField.setStyle("-fx-border-color: red;");
+            }else{
+                correoTextField.setStyle(null);
+            }
+
+
+        }catch (MongoException e){
+            e.printStackTrace();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return v;
+    }
+
+    public boolean nivelMaestriaSuperior(){
+        Boolean v = false;
+
+        if (Integer.parseInt(carneTextField.getText()) > 2000){
+            v = true;
+            carneTextField.setStyle("-fx-border-color: red;");
+        }else{
+            carneTextField.setStyle(null);
+        }
+        if (Integer.parseInt(hierbasTextField.getText()) > 2000){
+            v = true;
+            hierbasTextField.setStyle("-fx-border-color: red;");
+        }else{
+            hierbasTextField.setStyle(null);
+        }
+        if (Integer.parseInt(sangreTextField.getText()) > 2000){
+            v = true;
+            sangreTextField.setStyle("-fx-border-color: red;");
+        }else{
+            sangreTextField.setStyle(null);
+        }
+        if (Integer.parseInt(talaTextField.getText()) > 2000){
+            v = true;
+            talaTextField.setStyle("-fx-border-color: red;");
+        }else{
+            talaTextField.setStyle(null);
+        }
         return v;
     }
 
